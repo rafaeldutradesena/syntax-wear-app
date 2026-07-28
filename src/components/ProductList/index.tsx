@@ -1,0 +1,19 @@
+import { Link } from "@tanstack/react-router"
+import type { Product } from "../../interfaces/product"
+
+interface ProductListProps {
+  products: Product[]
+}
+
+export const ProductList = ({ products }: ProductListProps) => {
+  return (
+    <section className="grid gap-4 grid-cols-[repeat(auto-fit,minmax(350px,1fr))] mb-10">
+      {products.map(product => (
+        <div className="bg-amber-500 rounded-2xl">
+          <Link to="/products"><img src={product.image} alt={product.name} /></Link>
+        </div>
+      ))}
+
+    </section>
+  )
+}
