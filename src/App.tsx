@@ -6,6 +6,7 @@
 import { RouterProvider, createRouter } from "@tanstack/react-router";
 // Importa a "árvore de rotas", um arquivo gerado automaticamente que lista todas as páginas do app.
 import { routeTree } from "./router-tree-gen";
+import { CartProvider } from "./contexts/CartProvider";
 
 // Cria a instância do roteador, passando a lista de todas as rotas disponíveis.
 const router = createRouter({ routeTree });
@@ -22,23 +23,11 @@ declare module "@tanstack/react-router" {
 // --- Componente Principal da Página ---
 // Este componente `App` monta a estrutura da página principal (homepage).
 function App() {
-
-  return  <RouterProvider router={router}/>
+  return (
+    <CartProvider>
+      <RouterProvider router={router} />
+    </CartProvider>
+  );
 }
 
-export default App
-
-// (
-//     <>
-//     <Header />
-    
-//     <main className="py-10">
-//       <Hero />
-//       <Categories />
-//       <Gallery />
-//     </main>
-    
-//     <Footer />
-
-//     </>
-//   )
+export default App;
