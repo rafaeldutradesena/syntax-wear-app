@@ -1,29 +1,14 @@
 import IconCart from "@/assets/images/icon-cart.png";
 import React, { useContext } from "react";
 
-import MensTreeDasher from "@/assets/images/tree-dasher-2-natural-black-boyal-blue.webp";
-import MensTreeRunnerNz from "@/assets/images/tree-runner-nz-weathered-brown.webp";
-import MensWoolCruiser from "@/assets/images/wool-cruiser-burgundy.webp";
-import MensWoolCruiserSlipOn from "@/assets/images/wool-cruiser-slip-on-dark-grey.webp";
-import MensWoolCruiserWaterproof from "@/assets/images/wool-cruiser-waterproof-natural-black.webp";
 import { formatCurrency } from "../../utils/formatCurrency";
 import { CartContext } from "../../contexts/CartContext";
 
-const productsInCart = [
-  { id: 1, name: "Produto 1", image: MensTreeDasher, price: 35, quantity: 5 },
-  { id: 2, name: "Produto 2", image: MensTreeRunnerNz, price: 75, quantity: 2 },
-  { id: 3, name: "Produto 3", image: MensWoolCruiser, price: 85, quantity: 4 },
-  { id: 4, name: "Produto 4", image: MensWoolCruiserSlipOn, price: 135, quantity: 6 },
-  { id: 5, name: "Produto 5", image: MensWoolCruiserWaterproof, price: 15, quantity: 2 },
-  { id: 6, name: "Produto 1", image: MensTreeDasher, price: 35, quantity: 5 },
-  { id: 7, name: "Produto 2", image: MensTreeRunnerNz, price: 75, quantity: 2 },
-  { id: 8, name: "Produto 3", image: MensWoolCruiser, price: 85, quantity: 4 },
-  { id: 9, name: "Produto 4", image: MensWoolCruiserSlipOn, price: 135, quantity: 6 },
-];
-
 export const ShoppingCart = () => {
   const [cartIsOpen, setCartIsOpen] = React.useState<boolean>(false);
-  const {cart} = useContext(CartContext);
+  const {cart, removeFromCart, incrementToCart, decrementToCart} = useContext(CartContext);
+
+  console.log("cart", cart);
 
   return (
     <>
@@ -44,16 +29,16 @@ export const ShoppingCart = () => {
           onMouseDown={(e) => e.stopPropagation()}
         >
           <header className="flex items-center justify-between px-5">
-            <p className="text-2xl font-bold">Carrinho ({productsInCart.length})</p>
+            <p className="text-2xl font-bold">Carrinho ({cart.length})</p>
             <button className="text-xl cursor-pointer"
             onClick={() => setCartIsOpen(!cartIsOpen)}
             >X</button>
           </header>
 
           <ul className="p-4 overflow-y-auto scrollbar-hide h-[calc(100%-140px)] flex flex-col gap-3">
-            {productsInCart.map((product) => (
+            {cart.map((product) => (
               <li key={product.id} className="flex flex-col gap-1 px-6">
-                <button className="self-end text-s cursor-pointer">X</button>
+                <button className="self-end text-s cursor-pointer" onClick={() => removeFromCart(product.id)}>X</button>
 
                 <div className="flex gap-4">
                   <img
@@ -73,9 +58,9 @@ export const ShoppingCart = () => {
                       </span>
                     </p>
                     <div className="border flex gap-6 py-1 px-3">
-                      <button className="cursor-pointer">-</button>
+                      <button className="cursor-pointer" onClick={() => decrementToCart(product)}>-</button>
                       <p>{product.quantity}</p>
-                      <button className="cursor-pointer">+</button>
+                      <button className="cursor-pointer" onClick={() => incrementToCart(product)}>+</button>
                     </div>
                   </div>
                 </div>
