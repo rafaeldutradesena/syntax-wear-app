@@ -8,15 +8,18 @@ export const ShoppingCart = () => {
   const [cartIsOpen, setCartIsOpen] = React.useState<boolean>(false);
   const {cart, removeFromCart, incrementToCart, decrementToCart} = useContext(CartContext);
 
-  console.log("cart", cart);
-
   return (
     <>
       <button
-        className="cursor-pointer"
+        className="relative cursor-pointer"
         onClick={() => setCartIsOpen(!cartIsOpen)}
       >
         <img src={IconCart} alt="Ícone carrinho de compras" />
+        {cart.length > 0 && (
+          <span className="absolute -top-3 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+            {cart.length}
+          </span>
+        )}
       </button>
 
       <div
